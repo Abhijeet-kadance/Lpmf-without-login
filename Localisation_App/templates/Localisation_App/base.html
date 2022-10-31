@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+  <head>
+    <title>{% block title %}Localisation{% endblock %}</title>
+    <!-- CSS only -->
+
+    {% comment %} favicon {% endcomment %}
+    
+    <!-- FavIcon File -->
+    <link rel="shortcut icon" type="image/png" href="{% static './Localisation_App/img/favicon.ico' %}"/>
+     <!-- Font Awesome CSS source File -->
+     <link rel="stylesheet" href="{% static 'Localisation_App/css/all.min.css' %}"/>
+    <!-- Aminate.css CSS Source File -->
+    <link rel="stylesheet" href="{% static 'Localisation_App/css/animate.min.css' %}">
+    <!-- Animate on scroll -->
+    <link href="{% static 'Localisation_App/css/aos.css' %}" rel="stylesheet" />
+    <!-- Bootstrap Source Minified File -->
+    <link rel="stylesheet" href="{% static 'Localisation_App/css/bootstrap.min.css' %}"/>
+   
+    <!-- Main Stylesheet File -->
+    <link href="{% static 'Localisation_App/css/main.css' %}" rel="stylesheet"/>
+    <!-- Bhashni Section CSS File -->
+    <link href="{% static 'Localisation_App/css/bhashini-home.css' %}" rel="stylesheet"/>
+   
+   <script type="text/javascript" src="{% static 'Localisation_App/js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script> 
+    <!-- JS Files -->
+
+    <!-- Popper JS File-->
+    <!-- <script
+      src="{% static 'Localisation_App/js/bootstrap.js' %}"
+      integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+      crossorigin="anonymous"
+    ></script> -->
+    {% comment %} <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+    crossorigin="anonymous"
+  ></script> {% endcomment %}
+
+
+    <!-- Popper JS File-->
+    <script
+      src="{% static 'Localisation_App/js/popper.min.js' %}"
+      integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+      crossorigin="anonymous"
+    ></script>
+    <!-- ACC TOLLBAR JS FILE -->
+    <script src="{% static 'Localisation_App/js/acctoolbar.min.js' %}"></script>
+    <!-- CHART JS FILE -->
+    <script src="{% static 'Localisation_App/js/chart.js' %}"></script>
+    <!-- Accessibility Code Snippet JS -->
+    {% comment %} <script>
+      // optional init
+      window.onload = function () {
+        window.micAccessTool = new MicAccessTool({
+          link: "http://your-awesome-website.com/your-accessibility-declaration.pdf",
+          contact: "mailto:your-mail@your-awesome-website.com",
+          buttonPosition: "right", // default is 'left'
+          forceLang: "ru-en", // default is 'en' may be 'he-IL', 'ru-RU', or 'fr_FR'
+        });
+        //setLanguageComboBox("GOTWL_L10N_DROPDOWN_CONTAINER_ID");
+      };
+    </script> {% endcomment %}
+    <!-- GO Translate JS File -->
+    <script
+      type="text/javascript"
+      src="{% static 'Localisation_App/js/gotwl.min.js' %}"
+    ></script>
+
+    
+    <script type="text/javascript">
+      window.history.forward();
+      function noBack() { window.history.forward(); }
+    </script>
+    <!-- END OF JS Files -->
+
+  </head>
+
+  <body onload="noBack();" 
+	onpageshow="if (event.persisted) noBack();" onunload="">
+    <!--Navbar start-->
+    <nav class="navbar customNav">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-sm-12">
+            <a class="navbar-brand" style="color: white" href="#"
+              ><span style="margin-right: 10px"
+                ><i
+                  class="fa fa-envelope text-white"
+                  aria-hidden="true"
+                ></i></span
+              >lpmf[at]cdac[dot]in</a
+            >
+            <a class="navbar-brand" style="color: white" href="#"
+              ><span style="margin-right: 10px"
+                ><i class="fa fa-phone text-white" aria-hidden="true"></i></span
+              >020-25503495</a
+            >
+          </div>
+        </div>
+
+        <form class="d-flex" role="search">
+          <span id="GOTWL_L10N_DROPDOWN_CONTAINER_ID"></span>
+          <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+          style="margin-right: 10px;"> -->
+
+          <!-- <select class="form-select" aria-label="Default select example">
+          <option selected>--Select Language--</option>
+          <option value="1">Hindi</option>
+          <option value="2">Marathi</option>
+          <option value="3">Gujrati</option>
+          <option value="3">Telgu</option>
+          <option value="3">Tamil</option>
+          <option value="3">Bengali</option>
+        </select> -->
+        </form>
+      </div>
+    </nav>
+
+    {% include 'Localisation_App/topmenu.html' %}
+    <!--Navbar end-->
+
+    <!-- HOME BLOCK -->
+
+    {% block home %} {% endblock %}
+
+    <!-- ABOUT US BLOCK -->
+
+    {% block aboutus %} {% endblock %}
+
+    <!-- TOOLS BLOCK -->
+
+    {% block tools %} {% endblock %}
+
+    <!-- SERVICES BLOCK -->
+
+    {% block services %} {% endblock %}
+
+    <!--Services Demo page-->
+
+    {% block servicesDemo %} {% endblock %}
+
+    <!-- SUCCESS STORIES BLOCK -->
+
+    {% block successstory %} {% endblock %}
+
+    <!--SITEMAP BLOCK -->
+
+    {% block sitemap %} {% endblock %}
+
+    <!--TERMS AND CONDITION BLOCK -->
+
+    {% block termsandconditions %} {% endblock %}
+
+    <!--FAQS BLOCK -->
+
+    {% block faqs %} {% endblock %}
+
+    <!--Keyboard BLOCK -->
+
+    {% block keyboard %} {% endblock %}
+
+    <!--TTS SERVICE BLOCK-->
+    {% block tts_service %} {% endblock %}
+
+    <!--TRANSLITERATION SERVICE BLOCK-->
+    {% block transliteration_service %} {% endblock %}
+
+    <!--MACHINE TRANSLATION SERVICE BLOCK-->
+    {% block machine_translation %} {% endblock %}
+
+    <!--NAME MATCHER SERVICE BLOCK-->
+    {% block name_matcher %} {% endblock %}
+
+    <!--GoTranslate SERVICE BLOCK-->
+    {% block gotranslate_service %} {% endblock%}
+
+    <!--ANUVAAD SERVICE BLOCK-->
+    {% block anuvaad %} {% endblock %}
+
+    <!--Contact Us BLOCK -->
+
+    {% block contactus %} {% endblock %}
+    <!-- ACCESSIBILITY STATEMENT BLOCK -->
+
+    {% block accessibilitystatement %} {% endblock %}
+
+    <!-- WEBSITE POLICIES BLOCK -->
+
+    {% block websitepolicies %} {% endblock %}
+
+    <!-- HELP BLOCK -->
+
+    {% block help %} {% endblock %}
+
+    <!--Register Page-->
+
+    {% block register %} {% endblock %}
+
+    <!-- Bhashini Page -->
+
+    {% block Bhashini %} {% endblock %}
+    <!--Login Page-->
+
+    {% block login %} {% endblock %}
+
+    <!--Profile page-->
+
+    {% block profile %} {% endblock %}
+
+    {% comment %} Search Page {% endcomment %}
+    {% block search %} {% endblock %}
+
+    <!--Logout Page-->
+    {% block logout %} {% endblock %}
+
+    <!-- Translation Quote Page -->
+
+    {% block translation_quote %} {% endblock %}
+    <!-- Translation Quote Page User -->
+    {% block translation_quote_user_dashboard %} {% endblock %}
+    <!-- Translation Quote Page show -->
+    {% block translation_quote_show %} {% endblock %}
+
+    <!--Dashboard Page-->
+    {% block dashboard %} {% endblock %} {% comment %} Empanelled Agencies Page
+    {% endcomment %} {% block empanelled_agencies %} {% endblock %}
+
+    <!-- Footer Section Start -->
+    {% include 'Localisation_App/footer.html' %}
+    <!-- Footer Section End -->
+
+    <!-- <script>
+      $("#maindiv").width($("#div1").width());
+    </script> -->
+    <script src="{% static 'Localisation_App/js/aos.js' %}"></script>
+    <script>
+      AOS.init();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+{% extends 'Localisation_App/base.html' %} 
+{% block title %}Translation Quote User Dashboard{% endblock %}
+ {% load static %}
+  {% block translation_quote_user_dashboard %} 
+
+  {% comment %} css {% endcomment %}
+  <link
+  href="{% static 'Localisation_App/css/translation_quote/translation_quote_user_dashboard.css' %}"
+  rel="stylesheet"
+  />
+  {% comment %} ends css {% endcomment %}
+
+  <div class="text-center p-3">
+    <input type="text" class="text-center rounded-5 t-dash-heading" value="Translation Quote Dashboard" disabled />
+  </div>
+
+<div class="container mb-5">
+  {% if translation_quote_data %}
+    {% for quote_data in translation_quote_data %}
+    
+    <div class="card t-dash-main2">
+      <div class="card-body px-4 t-dash-main">
+        <h5 class="text-muted fs-4 fw-semibold my-2">Application Number : {{quote_data.application_number}}</h5>
+          <div class="row">
+            <div class="col-sm-2 fw-semibold">
+             URL :
+            </div>
+            <div class="col-sm-8">{{quote_data.url}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 fw-semibold">
+             Language :
+            </div>
+            <div class="col-sm-8">
+              {{quote_data.language}}
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-sm-2 fw-semibold">
+              Submission Date :
+            </div>
+            <div class="col-sm-8">
+              {{quote_data.submission_date}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 fw-semibold">
+              Status :
+            </div>
+            <div class="col-sm-8">
+             <strong class="{% if quote_data.status == 'PENDING' %} t-dash-pending {% elif quote_data.status == 'COMPLETED' %} text-success{% else %} text-primary {% endif %}">{{quote_data.status}}</strong>
+            </div>
+          </div>
+        <a href="{% url 'Localisation_App:translation_quote_show' quote_data.application_number %}" class="btn btn-primary">View More</a>
+      </div>
+    </div>
+
+    {% endfor %}
+    {% else %}
+  <div>
+    No Record Found!
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

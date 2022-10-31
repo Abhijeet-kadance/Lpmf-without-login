@@ -1,0 +1,84 @@
+
+{% extends 'Localisation_App/base.html' %}
+{% block title %}Services{% endblock %}
+{% load static %}
+
+{% block services %}
+<link
+      href="{% static 'Localisation_App/css/services.css' %}"
+      rel="stylesheet"
+    />
+
+<!--Content starts here-->
+<div class="container-fluid">
+  <form  method="POST" style="margin-bottom: 0px !important;>
+    {%csrf_token%}
+  <div class="text-center p-3">
+    <input type="text" class="text-center rounded-5 sevices-heading" value="Services" disabled />
+  </div>
+  {% comment %} <p class="text-center fs-5">
+    C-DAC GIST has vast NLP resources and is pioneer in Indian Language
+    computing. These are being now offered as web-service.
+  </p> {% endcomment %}
+  <div class="row back-image pt-3" style="background-image: url('{% static './Localisation_App/img/Vector-4.png' %}')">
+    
+    <!-- <div class="col-lg-3 fs-4 px-4">
+      C-DAC GIST has vast NLP resources and is pioneer in Indian Language
+      computing. These are being now offered as web-service.
+    </div> -->
+    <div class="col-lg-6 fw-semibold service-main-description">
+      C-DAC GIST has vast NLP resources and is pioneer in Indian Language
+      computing. These are being now offered as web-service.
+    </div>
+    <div class="row">
+      {% for service in Servicesdata %}
+      {% if service.Services_Name != 'Text to speech' %}
+
+      <div class="col-lg-4 " >
+        <div class="row p-5 d-flex justify-content-center">
+          <div class="card rounded-5 service-card1" style="padding:0">
+            <div class="card-body">
+              <div class="text-center">
+                <h5 class="text-muted pb-3 pt-2">
+                  <strong class="service-card-heading">{{ service.Services_Name }}</strong>
+                </h5>
+              </div>
+              <div class="row">
+                <div class="col-3 first-section">
+                  <img class="card-img pb-2" src="{% static './Localisation_App/img/services-page.jpg' %}" width="auto"
+                  height="auto" />
+                </div>
+                <div class="col-9 second-section">
+                  <span>{{ service.Services_Description}}</span>
+                </div>
+              </div>
+            </div>
+            <a href="{% url service.Services_links %}" class="services-button pt-1 text-white d-flex justify-content-center text-decoration-none fs-4">
+            {% comment %} <button class="btn btn-primary services-button"> {% endcomment %}
+              View Service Demo
+              {% comment %} <a href={{service.Services_links}} class="text-white text-decoration-none fs-4">View Service Demo {% endcomment %}
+            {% comment %} </button> {% endcomment %}
+          </a>
+          </div>
+        </div>
+      </div>
+      {% if forloop.last %}
+     
+    </div>
+    {% else %}
+    {% if forloop.counter|divisibleby:"2" %}
+   
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    </div>
+   
+
+  </form>
+  <script src="{% static 'Localisation_App/js/main1.js' %}"></script>
+</div>
+{% endblock %}
+    
+    
+

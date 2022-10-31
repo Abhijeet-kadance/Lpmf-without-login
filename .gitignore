@@ -1,0 +1,15 @@
+localisation.sql
+__pycache__
+**/media
+**/logs
+**/ToolsCode
+ToolsCode/*.*
+**/ToolsCode/*.*
+*.zip
+**/media/**
+**/venv
+venv/*.*
+**/venv/*.*
+.env
+localisation_env
+static

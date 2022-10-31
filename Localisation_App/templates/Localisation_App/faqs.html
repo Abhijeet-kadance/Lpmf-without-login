@@ -1,0 +1,206 @@
+{% extends 'Localisation_App/base.html' %}
+{% block title %}FAQs{% endblock %}
+{% load static %} 
+{% block faqs %}
+<link
+      href="{% static 'Localisation_App/css/faqs.css' %}"
+      rel="stylesheet"
+    />
+
+    <!-- faq heading section -->
+
+    <div class="container-fluid faq-main">
+
+        <!-- <div class="col-12">
+            <h4 class="faq-Title">Frequently Asked Questions</h4>
+        </div> -->
+        <input
+        type="button"
+        class="text-center rounded-5 px-5 faq-page-header"
+        value="FAQ's"
+        disabled 
+      />
+
+        <div class="container-fluid m-2">
+            <div class="row  faq-search">
+                <div class="col-10">
+                   <form action={% url 'Localisation_App:faqsSearch' %}  method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% if faq_title == 'none' %}
+                        <input
+                        class="form-control "
+                        type="text"
+                        name="faq_title"
+                        placeholder="Enter Words"
+                        aria-label="Search"
+                      />{% else %}
+                      <input
+                        class="form-control "
+                        type="text"
+                        name="faq_title"
+                        value={{ faq_title }}
+                        placeholder="Search"
+                        aria-label="Search"
+                      />{% endif %}
+                      
+        
+                </div>
+                <div class="col-2">
+                    <input class="btn btn-primary" type="submit" value="Search" style="background-color: #219EBC;border-color:#219EBC;width:200px;font-size: 18px;" />
+                </div>
+            </form>
+            </div>
+           
+        
+        <div class="row">
+            <div class="accordion" id="accordionExample">
+               
+                <div class="row general">
+                    <h4 id="question">Gist Data Converter</h4>
+                </div>
+
+                {% for faq in data %}
+                {% if faq.FAQs_CategoryType.FAQs_CategoryType == 'Gist Data Converter' %}
+                <div>
+                    <div class="accordion-item section1">
+                        <h2 class="accordion-header" id='Carasol3_{{ forloop.counter }}'>
+                            <button class="accordion-button collapsed btn1" type="button" data-bs-toggle="collapse"
+                                data-bs-target='#Carasol4_{{ forloop.counter }}' aria-expanded="false" aria-controls='Carasol4_{{ forloop.counter }}'>
+                                {% comment %} <i class='fas fa-arrow-right'></i>&nbsp;&nbsp; {% endcomment %}
+                                <span class="px-1"><img  src="/static/Localisation_App/img/faqsgirl.png" width="40" height="80"></span>
+                                    {{ faq.FAQs_Question|safe }}
+                            </button>
+                        </h2>
+                        <div id='Carasol4_{{ forloop.counter }}' class="accordion-collapse collapse" aria-labelledby='Carasol3_{{ forloop.counter }}'
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body"> 
+                                <div class="row answer">
+                                    <div class="col-1 text-center">
+                                       <img  src="/static/Localisation_App/img/boyreply2.png" width="50" height="80"/>
+                                    </div>
+                                    <div class="col-11 pt-2">
+                                       {{ faq.FAQs_Answer|safe }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+
+                <div class="row general">
+                    <h4 id="question">FAQs for GoTranslate Web Localizer plugin</h4>
+                </div>
+
+                {% for faq in data %}
+                {% if faq.FAQs_CategoryType.FAQs_CategoryType == 'FAQs for GoTranslate Web Localizer plugin' %}
+                <div>
+                  
+                    <div class="accordion-item section1">
+                        <h2 class="accordion-header" id='Carasol5_{{ forloop.counter }}'>
+                            <button class="accordion-button collapsed btn1" type="button" data-bs-toggle="collapse"
+                                data-bs-target='#Carasol6_{{ forloop.counter }}' aria-expanded="false" aria-controls='Carasol6_{{ forloop.counter }}'>
+                                {% comment %} <i class='fas fa-arrow-right'></i>&nbsp;&nbsp; {% endcomment %}
+                                <span class="px-1"><img  src="/static/Localisation_App/img/faqsgirl.png" width="40" height="80"></span>
+                                    {{ faq.FAQs_Question|safe }}
+                            </button>
+                        </h2>
+                        <div id='Carasol6_{{ forloop.counter }}' class="accordion-collapse collapse" aria-labelledby='Carasol5_{{ forloop.counter }}'
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row answer">
+                                    <div class="col-1 text-center">
+                                       <img  src="/static/Localisation_App/img/boyreply2.png" width="50" height="80"/>
+                                    </div>
+                                    <div class="col-11 pt-2">
+                                       {{ faq.FAQs_Answer|safe }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endif %}
+                {% endfor %}
+
+
+                <div class="row general">
+                    <h4 id="question">GIST WebOT</h4>
+                </div>
+                    {% for faq in data %}
+                    {% if faq.FAQs_CategoryType.FAQs_CategoryType == 'GIST WebOT' %}
+                <div>
+                   
+                    <div class="accordion-item section1">
+                        <h2 class="accordion-header" id='Carasol7_{{ forloop.counter }}'>
+                            <button class="accordion-button collapsed btn1" type="button" data-bs-toggle="collapse" data-bs-target='#Carasol8_{{ forloop.counter }}' aria-expanded="false" aria-controls='Carasol8_{{ forloop.counter }}' >
+                                <span class="px-1"><img  src="/static/Localisation_App/img/faqsgirl.png" width="40" height="80"></span>
+                                    {{ faq.FAQs_Question|safe }}
+                            </button>
+                        </h2>
+                        <div id="Carasol8_{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby='Carasol7_{{ forloop.counter }}'
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row answer">
+                                    <div class="col-1 text-center"><img  src="/static/Localisation_App/img/boyreply2.png" width="50" height="80"/></div>
+                                   <div class="col-11 pt-2">{{ faq.FAQs_Answer|safe }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {% endif %}
+                {% endfor %}
+
+
+                <div class="row general">
+                    <h4 id="question">General</h4>
+                </div>
+                {% for faq in data %}
+
+                
+                {% if faq.FAQs_CategoryType.FAQs_CategoryType == 'General' %}
+                <div>
+                    
+                    <div class="accordion-item section1">
+                        <h2 class="accordion-header" id="Carasol1_{{ forloop.counter }}">
+                            <button class="accordion-button collapsed btn1" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#Carasol2_{{ forloop.counter }}" aria-expanded="false" aria-controls="Carasol2_{{ forloop.counter }}">
+                                {% comment %} <i class='fas fa-arrow-right' style="margin:0 10px 0 0"></i>&nbsp;&nbsp; {% endcomment %}
+                                <span class="px-1"><img  src="/static/Localisation_App/img/faqsgirl.png" width="40" height="80"/></span>
+                                    {{ faq.FAQs_Question|safe }}
+                            </button>
+                        </h2>
+                        <div id="Carasol2_{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="Carasol1_{{ forloop.counter }}"
+                            data-bs-parent="#accordionExample">
+                            <div  class="accordion-body">
+                                <div class="row answer">
+                                    <div class="col-lg-1 text-center">
+                                       <img  src="/static/Localisation_App/img/boyreply2.png" width="50" height="80"/>
+                                    </div>
+                                    <div class="col-11 pt-2">
+                                       {{ faq.FAQs_Answer|safe }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                </div>
+                {% endif %}
+                {% endfor %}
+
+               
+            </div>
+        </div>
+    </div>
+    </div>
+
+    
+{% endblock %}

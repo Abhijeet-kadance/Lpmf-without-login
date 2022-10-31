@@ -1,0 +1,83 @@
+{% extends 'Localisation_App/base.html' %}
+{% block title %}Login{% endblock %}
+{% load static %}
+{% block login %}
+<link
+      rel="stylesheet"
+      href="{% static 'Localisation_App/css/user/login.css' %}"
+    />
+
+<div class="container-fluid p-3">
+  <div class="text-center p-3">
+    <input type="text" class="text-center rounded-5 login-heading" value="Login" disabled />
+  </div>
+  <div class="row">
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+      <img class="img-fluid" src="{% static './Localisation_App/img/Login.png' %}" alt="..." />
+    </div>
+    
+    <div class="col-sm-12 col-md-6 col-lg-6 login-form-main">
+      <div class="login-user-icon">
+        <img class="img-fluid" src="{% static './Localisation_App/img/login-user-icon.png' %}" alt="..." />
+      </div>
+      <form class="login-form" action="{% url 'Localisation_App:login' %}" method="POST" autocomplete="off">
+        {% csrf_token %}
+        <div class="row mx-3">
+         
+          <div class="col-lg-12 mb-2">
+            {% for message in messages %}
+            <div class="container-fluid p-0">
+              <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+                {% comment %} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="True">&times;</span>
+                </button> {% endcomment %}
+                {{ message }}
+              </div>
+            </div>
+            {% endfor %}
+
+
+            <div class="form-group position-relative mt-5">
+              <label class="mb-2">Email <span class="text-danger">*</span></label>
+              {{form.username}}
+            </div>
+            {% if form.username.errors %}
+            {% for error in form.username.errors %}
+              <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+              </div>
+              {% endfor %}
+              {% endif %}
+          </div>
+
+          <div class="col-lg-12 mb-2">
+            <div class="form-group position-relative">
+              <label  class="mb-2">Password <span class="text-danger">*</span></label>
+              {{form.password}}
+            </div>
+            <input class="login-button" type="submit" value="Submit"/>
+          </div>
+       
+       
+          
+          <div class="col-12 left">
+            <p class="mb-0 mt-3">Not a user yet? 
+              <a href="{% url 'Localisation_App:register' %}" class="text-primary fw-semibold">Register here</a>
+            </p>
+          </div>
+          <div class="col-12 left">
+            <p class="mb-0 mt-1">
+              <a href="{% url 'Localisation_App:forgetPassword' %}" class="text-primary fw-semibold">Forgot Your Password ?</a>
+            </p>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

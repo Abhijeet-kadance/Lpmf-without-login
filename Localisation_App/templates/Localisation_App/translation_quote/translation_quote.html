@@ -1,0 +1,150 @@
+{% extends 'Localisation_App/base.html' %} 
+{% block title %}Translation Quote{% endblock %}
+ {% load static %}
+  {% block translation_quote %} 
+  {% comment %} css {% endcomment %}
+<link
+  href="{% static 'Localisation_App/css/translation_quote/translation_quote.css' %}"
+  rel="stylesheet"
+/>
+{% comment %} ends css {% endcomment %}
+
+<div class="container mb-3">
+  <div class="text-center p-3">
+    <input
+      type="text"
+      class="text-center rounded-5 t_quote-heading"
+      value="Translation Quote"
+      disabled
+    />
+  </div>
+  <div class="card px-5 pt-3">
+    <div class="card-body t_quote-card">
+      <form
+        action="{% url 'Localisation_App:translation_quote' %}"
+        method="POST"
+      >
+        {% csrf_token %}
+        <div class="row mt-3">
+          <div class="col-lg-2 px-4 pt-2 fw-semibold">
+            <label for="inputPassword5" class="form-label">URL <span class="text-danger">*</span></label>
+          </div>
+          <div class="col-lg-8">{{form.url}}</div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-lg-2"></div>
+          {% if url_error %}
+          <div class="col-lg-8 text-danger  fw-semibold">{{url_error}}</div>
+        {% endif %}
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-2 px-4 pt-2 fw-semibold">
+            <label class="form-label">Company Email <span class="text-danger">*</span></label>
+          </div>
+          <div class="col-lg-3">{{form.company_email}}</div>
+          <div class="col-lg-2 px-4 pt-2 fw-semibold">
+            <label class="form-label">Domain <span class="text-danger">*</span></label>
+          </div>
+          <div class="col-lg-3">{{form.domain}}</div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-lg-2"></div>
+          {% if email_error %}
+          <div class="col-lg-8 text-danger  fw-semibold">{{email_error}}</div>
+        {% endif %}
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-2 px-4 pt-2 fw-semibold">
+            <label class="form-label">Language <span class="text-danger">*</span></label>
+          </div>
+          <div class="col-lg-3">{{form.language}}</div>
+          <div class="col-lg-2 px-4 pt-2 fw-semibold">
+            <label class="form-label">Delivery Date <span class="text-danger">*</span></label>
+          </div>
+          <div class="col-lg-3">{{form.delivery_date}}</div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-lg-7"></div>
+          {% if date_error %}
+          <div class="col-lg-4 text-danger fw-semibold">{{date_error}}</div>
+        {% endif %}
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-2 px-4 pt-2 fw-semibold">
+            <label class="form-label">Remark </label>
+          </div>
+          <div class="col-lg-8">{{form.client_remark}}</div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-lg-2"></div>
+          {% if remark_error %}
+          <div class="col-lg-8 text-danger fw-semibold">{{remark_error}}</div>
+        {% endif %}
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-8 d-flex flex-row-reverse">
+            <input class="btn btn-primary" type="submit" value="Submit" />
+          </div>
+        </div>
+        {% ifequal status 'success' %}
+        <h5 class="text-primary text-center fw-semibold">{{message}}</h5>
+        {% endifequal %}
+         {% ifequal status 'error' %}
+        <h5 class="text-danger text-center fw-semibold">{{message}}</h5>
+        {% endifequal %}
+      </form>
+    </div>
+  </div>
+</div>
+
+{% comment %} OLD CODE STARTS {% endcomment %} 
+{% comment %}
+<div class="m-3">
+  <div class="container">
+    <div class="text-center p-3">
+      <input
+        type="text"
+        class="text-center rounded-5 t_quote-heading"
+        value="Translation Quote"
+        disabled
+      />
+    </div>
+    <div class="card">
+      <div class="card-body t_quote-card">
+        <h3>Count estimated words for a webpage</h3>
+        <form
+          action="{% url 'Localisation_App:translation_quote' %}"
+          method="POST"
+        >
+          {% csrf_token %}
+          <div class="row g-3 align-items-center">
+            <div class="col-1">
+              <label class="col-form-label fw-semibold">Enter URL</label>
+            </div>
+            <div class="col-8">
+              <input
+                type="text"
+                class="form-control"
+                name="url"
+                placeholder="Enter URL for the webpage"
+              />
+            </div>
+            <div class="col-3">
+              <button type="submit" class="btn btn-primary">Count Words</button>
+            </div>
+          </div>
+        </form>
+        {% if total_words %}
+        <h5 class="text-primary">
+          Estimated Words on http://sdns are {{total_words}}
+        </h5>
+        {% endif %} {% if error_message %}
+        <h5 class="text-danger">{{error_message}}</h5>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endcomment %} {% comment %} OLD CODE ENDS {% endcomment %} 
+{% endblock %}

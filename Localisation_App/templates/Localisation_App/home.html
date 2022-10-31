@@ -1,0 +1,43 @@
+{% extends 'Localisation_App/base.html' %} {% block title %}Home{% endblock %}
+{% load static %} {% block home %}
+
+
+<!--carousel start-->
+{% include 'Localisation_App/home/home_carousal.html' %}
+<!--carousel end -->
+
+<!--News start-->
+{% include 'Localisation_App/home/home_news.html' %}
+<!--News end-->
+
+<!--About Us start-->
+{% include 'Localisation_App/home/home_aboutus.html' %}
+<!--About Us end-->
+
+<!--Vision start-->
+{% include 'Localisation_App/home/home_vision.html' %}
+<!--Vision end-->
+
+<!-- Bhashini Home Section Starts -->
+{% include 'Localisation_App/home/home_bhashini.html' %}
+<!-- Bhashinin Home Section Ends -->
+
+<!--Mission start-->
+{% include 'Localisation_App/home/home_mission.html' %}
+<!--mission end-->
+
+
+
+<!-- Success Stories Start -->
+{% include 'Localisation_App/home/home_success_stories.html' %}
+<!-- Success Stories Ends -->
+
+<!--marketing carousel start-->
+{% include 'Localisation_App/home/home_marketting.html' %}
+<!--marketing carousel end-->
+
+<!-- Estimate Cost Section Start -->
+{% comment %} {% include 'Localisation_App/home/home_cost_estimation.html' %} {% endcomment %}
+<!-- Esitmate Cost Sectio End -->
+
+{% endblock %}

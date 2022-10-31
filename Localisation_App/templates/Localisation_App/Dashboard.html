@@ -1,0 +1,529 @@
+{% extends 'Localisation_App/base.html' %} {% block title %} Dashboard
+{%endblock %} {% load static %} {% block dashboard %}
+
+<link
+      rel="stylesheet"
+      href="{% static 'Localisation_App/css/dashboard.css' %}"
+    />
+
+    <div class="container-fluid dashboard-main" style="margin-bottom: 20px;">
+
+      <input
+        type="button"
+        class="text-center rounded-5 px-5 dashboard-page-header"
+        value="Dashboard"
+        disabled 
+      />
+
+    <!-- <div class="row" style="text-align: center"><h1>Dashboard</h1></div> -->
+     
+    <div class="row" style="padding: 40px">
+
+        <div class="col-sm-12 col-lg-6">
+          <div class="card" style="background-color: rgb(241, 191, 150);">
+            <h3 class="Dsh_Heading">Total Tools Downloaded</h3>
+            <div class="card-body" style="background-color: rgb(248, 229, 213);">
+              <h3 class="Dsh_Heading">
+                {{Total_Tools_DownloadCount.ToolsData_DownloadCounter__sum}}
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-lg-6">
+          <div class="card" style="background-color: rgb(241, 191, 150);">
+            <h3 class="Dsh_Heading">Total Resources Downloaded</h3>
+            <div class="card-body" style="background-color: rgb(248, 229, 213);">
+              <h3 class="Dsh_Heading">
+                {{Total_ResourceData_DownloadCount.ResourceData_DownloadCounter__sum}}
+              </h3>
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+    <div class="row donuts">
+
+      <div class="col-1"></div>
+   
+      <div class="col-sm-12 col-md-12 col-lg-3">
+        <div class="card" style="background-color: rgb(238, 216, 157);">
+          <h3 class="Dsh_Heading">Tools Category</h3>
+        
+          <div class="card-body" style="background-color: rgb(247, 239, 217);">
+            <canvas style="height: 100%" id="Tools"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-3">
+        <div class="card" style="background-color: rgb(241, 191, 150);">
+          <h3 class="Dsh_Heading">Success Stories Category Datasets</h3>
+         
+          <div class="card-body" style="background-color: rgb(248, 229, 213);">
+            <canvas style="height: 100%" id="storiesdoughnut"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-lg-3">
+        <div class="card" style="background-color: rgb(238, 216, 157);">
+          <h3 class="Dsh_Heading">Resources Category </h3>
+         
+          <div class="card-body" style="background-color: rgb(247, 239, 217);">
+            <canvas style="height: 100%" id="Resources"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-1"></div>
+
+    </div>
+
+    <div class="row" style="margin-top: 50px">
+
+      <div class="col-sm-12 col-lg-8">
+        <div class="card" style="background-color: rgb(238, 216, 157);">
+          <h3 class="Dsh_Heading">Resources Download Datasets</h3>
+          <h5 class="Dsh_Heading">
+            Total Resources Downloaded : {{Total_ResourceData_DownloadCount.ResourceData_DownloadCounter__sum}}
+          </h5>
+      
+          <div class="card-body" style="background-color: rgb(247, 239, 217);">
+            <canvas style="height: 100%" id="resourceshit"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-lg-4">
+        <div class="card" style="background-color: rgb(238, 216, 157);">
+          <h3 class="Dsh_Heading">Resources Download Datasets</h3>
+          <h5 class="Dsh_Heading">
+            Total Resources Downloaded : {{Total_ResourceData_DownloadCount.ResourceData_DownloadCounter__sum}}
+          </h5>
+      
+          <div class="card-body" style="background-color: rgb(247, 239, 217);">
+            <canvas style="height: 100%" id="resourceshitdoughnut"></canvas>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-12 col-lg-6">
+        <div class="card" style="background-color: rgb(238, 216, 157);">
+          <h3 class="Dsh_Heading">Tools Download Datasets</h3>
+        
+          <h5 class="Dsh_Heading">
+            Total Tools Downloaded : {{Total_Tools_DownloadCount.ToolsData_DownloadCounter__sum}}
+          </h5>
+         
+          <div class="card-body" style="background-color: rgb(247, 239, 217);">
+            <canvas style="height: 100%" id="toolshit"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-lg-6">
+        <div class="card" style="background-color: rgb(241, 191, 150);">
+          <h3 class="Dsh_Heading">Success Stories Category Datasets</h3>
+         
+          <div class="card-body" style="background-color: rgb(248, 229, 213);">
+            <canvas style="height: 100%" id="Stories"></canvas>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <div style="background-color:#e6ba79;"></div>
+  <div style="background-color:#ca974a;"></div>
+  <div style="background-color:#b17a28;"></div>
+  <div style="background-color:#77521b;"></div>
+  <div style="background-color:#493210;"></div>
+
+
+  <!--TOOLS DOWNLOAD WITH NAME SCRIPT SECTION  -->
+  <script>
+      var ctx = document.getElementById('toolshit').getContext('2d');
+      var myChart = new Chart(ctx,{
+          type: 'bar',
+          data:
+          {
+              labels: {{toolshit_name|safe}},
+              datasets: [{
+              label: 'Tools hit',
+              backgroundColor: [
+              '#1C4E80',
+            '#4994df',
+            '#194979',
+            '#0c2a47',
+            '#03203b',
+
+            '#eb957e',
+            '#c7674c',
+            '#9e4932',
+            '#8d351d',
+            '#582212',
+
+            '#90c9e7',
+            '#63b3df',
+            '#346a85',
+            '#154f6e',
+            '#102d3d',
+
+            '#e6ba79',
+            '#ca974a',
+            '#b17a28',
+            '#77521b',
+            '#493210',
+            '#1C4E80',
+            '#4994df',
+            '#194979',
+            '#0c2a47',
+            '#03203b',
+
+            '#eb957e',
+            '#c7674c',
+            '#9e4932',
+            '#8d351d',
+            '#582212',
+
+            '#90c9e7',
+            '#63b3df',
+            '#346a85',
+            '#154f6e',
+            '#102d3d',
+
+            '#e6ba79',
+            '#ca974a',
+            '#b17a28',
+            '#77521b',
+            '#493210',
+                ],
+              maxBarThickness:20,
+              hoverBackgroundColor:'#0091D5',
+              data: {{toolsHitCount|safe}},}]
+          },
+          options:
+          {
+            indexAxis: 'x',
+         },
+    });
+  </script>
+
+  <!--RESOURCES DOWNLOAD WITH NAME SCRIPT SECTION  -->
+  <script>
+      var ctx = document.getElementById('resourceshit').getContext('2d');
+      var myChart = new Chart(ctx,{
+          type: 'bar',
+          data:
+          {
+              labels: {{resourcesshit_name|safe}},
+              datasets: [{
+              label: 'Resources hit',
+              backgroundColor: [
+              '#1C4E80',
+            '#4994df',
+            '#194979',
+            '#0c2a47',
+            '#03203b',
+
+            '#eb957e',
+            '#c7674c',
+            '#9e4932',
+            '#8d351d',
+            '#582212',
+
+            '#90c9e7',
+            '#63b3df',
+            '#346a85',
+            '#154f6e',
+            '#102d3d',
+
+            '#e6ba79',
+            '#ca974a',
+            '#b17a28',
+            '#77521b',
+            '#493210',
+                ],
+              maxBarThickness:20,
+              hoverBackgroundColor:'#0091D5',
+              data: {{resourcesHitCount|safe}},}]
+          },
+          options:
+          {
+            indexAxis: 'y',
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        precision: 0
+                    }
+                }]
+            }
+         },
+    });
+  </script>
+ 
+   <script>
+    var ctx = document.getElementById('resourceshitdoughnut').getContext('2d');
+    var myChart = new Chart(ctx,{
+        type: 'doughnut',
+        data:
+        {
+            labels: {{resourcesshit_name|safe}},
+            datasets: [{
+            label: 'Resources hit',
+            backgroundColor: [
+            '#1C4E80',
+            '#4994df',
+            '#194979',
+            '#0c2a47',
+            '#03203b',
+
+            '#eb957e',
+            '#c7674c',
+            '#9e4932',
+            '#8d351d',
+            '#582212',
+
+            '#90c9e7',
+            '#63b3df',
+            '#346a85',
+            '#154f6e',
+            '#102d3d',
+
+            '#e6ba79',
+            '#ca974a',
+            '#b17a28',
+            '#77521b',
+            '#493210',
+           
+              ],
+            maxBarThickness:10,
+            hoverBackgroundColor:'#0091D5',
+            data: {{resourcesHitCount|safe}},}]
+        },
+        options:
+        {
+          indexAxis: 'y',
+          scales: {
+              xAxes: [{
+                  ticks: {
+                      precision: 0
+                  }
+              }]
+          }
+       },
+  });
+</script>
+
+  <!--SUCCESS STORIES CATEGORY DATASET SCRIPT SECTION-->
+  <script>
+    var ctx = document.getElementById('Stories').getContext('2d');
+    var myChart = new Chart(ctx,{
+
+        type: 'bar',
+        data: {
+        labels: {{successStories_CategoryData|safe}},
+        datasets: [{
+            label: 'Success Stories Category Dataset',
+            backgroundColor: [
+            '#1C4E80',
+            '#4994df',
+            '#194979',
+            '#0c2a47',
+            '#03203b',
+
+            '#eb957e',
+            '#c7674c',
+            '#9e4932',
+            '#8d351d',
+            '#582212',
+
+            '#90c9e7',
+            '#63b3df',
+            '#346a85',
+            '#154f6e',
+            '#102d3d',
+
+            '#e6ba79',
+            '#ca974a',
+            '#b17a28',
+            '#77521b',
+            '#493210',
+            ],
+            maxBarThickness:20,
+            hoverBackgroundColor:'#0091D5',
+            data: {{count_Of_Stories_PerCategory|safe}},
+        }]
+    },
+    options: {
+
+    }
+    });
+  </script>
+
+   <!--SUCCESS STORIES CATEGORY DATASET SCRIPT SECTION WITH  DOUGHNUT-->
+   <script>
+    var ctx = document.getElementById('storiesdoughnut').getContext('2d');
+    var myChart = new Chart(ctx,{
+
+        type: 'doughnut',
+        data: {
+        labels: {{successStories_CategoryData|safe}},
+        datasets: [{
+            label: 'Success Stories Category Dataset',
+            backgroundColor: [
+            // '#1C4E80',
+            // '#7E909A',
+            // '#EA6A47',
+            // '#1C4E80',
+            // '#7E909A',
+            // '#EA6A47',
+            // '#1C4E80',
+            // '#7E909A',
+            // '#EA6A47',
+            '#1C4E80',
+            '#4994df',
+            '#194979',
+            '#0c2a47',
+            '#03203b',
+
+            '#eb957e',
+            '#c7674c',
+            '#9e4932',
+            '#8d351d',
+            '#582212',
+
+            '#90c9e7',
+            '#63b3df',
+            '#346a85',
+            '#154f6e',
+            '#102d3d',
+
+            '#e6ba79',
+            '#ca974a',
+            '#b17a28',
+            '#77521b',
+            '#493210',
+            ],
+            maxBarThickness:20,
+            hoverBackgroundColor:'#0091D5',
+            data: {{count_Of_Stories_PerCategory|safe}},
+        }]
+    },
+    options: {
+
+    }
+    });
+  </script>
+
+  <!--TOOLS CATEGORY DATASETS SCRIPT SECTION-->
+  <script>
+    var ctx = document.getElementById('Tools').getContext('2d');
+    var myChart = new Chart(ctx,{
+        type: 'doughnut',
+        data: {
+        labels: {{tools_CategoryData|safe}},
+        datasets: [{
+            label: 'Tools Dataset',
+            backgroundColor: [
+            '#1C4E80',
+            '#7E909A',
+            '#EA6A47',
+        ],
+            maxBarThickness:5,
+            hoverOffset: 4,
+            hoverBackgroundColor:'#0091D5',
+            data: {{count_Of_Tools_PerCategory|safe}},
+        }]
+    },
+    options: {
+
+    }
+    });
+  </script>
+
+  <!--RESOURCES DATASETS SCRIPT SECTION  -->
+  <script>
+    var ctx = document.getElementById('Resources').getContext('2d');
+    var myChart = new Chart(ctx,{
+
+        type: 'doughnut',
+
+        data: {
+        labels: {{resources_CategoryData|safe}},
+        datasets: [{
+            label: 'Resources Dataset',
+            backgroundColor: [
+            '#1C4E80',
+            '#7E909A',
+            '#EA6A47',
+        ],
+            maxBarThickness:5,
+            hoverOffset: 4,
+            hoverBackgroundColor:'#0091D5',
+            data: {{count_Of_Resources_PerCategory|safe}},
+        }]
+    },
+    options: {
+    }
+    });
+  </script>
+
+  <!--USER DATASETS SCRIPT SECTION -->
+  <script>
+    var ctx = document.getElementById('User').getContext('2d');
+    var myChart = new Chart(ctx,{
+
+        type: 'doughnut',
+
+        data: {
+        labels: {{user_CategoryData|safe}},
+        datasets: [{
+            label: 'User Dataset',
+            backgroundColor: [
+            '#1C4E80',
+            '#7E909A',
+            '#EA6A47',
+            ],
+            maxBarThickness:5,
+            hoverOffset: 4,
+            hoverBackgroundColor:'#0091D5',
+            data: {{count_Of_User_PerCategory|safe}},
+        }]
+    },
+    options: {
+    }
+    });
+  </script>
+
+  <!--GUIDELINES DATASETS SCRIPT SECTION -->
+  <script>
+    var ctx = document.getElementById('Guidelines').getContext('2d');
+    var myChart = new Chart(ctx,{
+
+        type: 'bar',
+
+        data: {
+        labels: {{guidelinesType|safe}},
+        datasets: [{
+            label: 'Guidelines for Indian Govt Websites',
+            backgroundColor: [
+            '#1C4E80'
+            ],
+            maxBarThickness:20,
+            hoverBackgroundColor:'#0091D5',
+            data: {{guidelinesCount_Per_Type|safe}},
+        }]
+    },
+    options: {
+    }
+    });
+  </script>
+
+{% endblock %}

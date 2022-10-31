@@ -1,0 +1,299 @@
+{% extends 'Localisation_App/base.html' %}
+{% block title %}Resources{% endblock %}
+{% load static %}
+
+{% block tools %}
+<link
+      href="{% static 'Localisation_App/css/tools.css' %}"
+      rel="stylesheet"
+/>
+<div class="container-fluid">
+  <!-- <div class="tools-page-header">
+    Tools
+  </div> -->
+  <input type="button" class="text-center rounded-5 px-5 tools-page-header" value="Resources" disabled />
+  <div class="row tools-box">
+    <div class="col-sm-12 col-lg-3">
+      <div class="tools-sidebar-section mx-4">
+        <form action={% url 'Localisation_App:resourceSearch' %} method="POST"
+          enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row p-3">
+            <div class="col-6">
+              {% if resource_title == 'none' %}
+              <input class="form-control me-2 enter-words" type="text" name="resourcename" placeholder="Enter Words"
+                aria-label="Enter Words" id="searchTerm" onchange="replaceSymbols()" />{% else %}
+              <input class="form-control me-2" type="text" name="resourcename" value={{ resource_title }}
+                placeholder="Search" aria-label="Search" id="searchTerm" onchange="replaceSymbols()"/>{% endif %}
+            </div>
+            <div class="col-6">
+              <input class="btn btn-primary tool-search-button" type="submit" style="background-color:#219EBC ;border-color:#219EBC;" value="Search" />
+            </div>
+            <hr style="margin-top: 20px;">
+          </div>
+           <script>
+            function replaceSymbols(){
+              const input = document.getElementById("searchTerm").value
+              console.log("input ", input)
+              console.log("without ss ", input.replace(/[^a-zA-Z0-9 ]/g, '-'));
+              document.getElementById("searchTerm").value = input.replace(/[^a-zA-Z0-9 ]/g, '-');
+            }
+          </script>
+
+        </form>
+        
+      
+
+        <div class="category-tool-title">Categories</div>
+
+        <form action={% url 'Localisation_App:resources' %} method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+        
+          {% if status_All_Checked == 'True' %}
+          <ul>
+            {% for categories in resourcescategory %}
+            <input class="tools-sidebar-item" type="checkbox" id="vehicle1" name="checkbox" value="{{ categories.pk }}"
+              onclick=" ">{{ categories.Resources_CategoryType }}</input></br>
+            {% comment %} <label class="tools-sidebar-item-text" for="vehicle1">{{ categories.Resources_CategoryType
+              }}</label><br /> {% endcomment %}
+            {% endfor %}
+          </ul>
+          {% else %}
+          <ul>
+            {% for categories in resourcescategory %}
+            {% if categories.Resources_Cat_Status %}
+            <input class="tools-sidebar-item" type="checkbox" id="vehicle1" name="checkbox" value="{{ categories.pk }}"
+              checked="checked">{{ categories.Resources_CategoryType }}</input></br>
+            
+            {% else %}
+            <input class="tools-sidebar-item" type="checkbox" id="vehicle1" name="checkbox" value="{{ categories.pk }}"
+              onclick=" ">{{ categories.Resources_CategoryType }}</input></br>
+            
+            {% endif %}
+            {% endfor %}
+          </ul>
+          {% endif %}
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-5">
+              <button class='btn btn-primary filter-button' style="background-color:#219EBC ;border-color:#219EBC"
+                type="submit" value="Fetch">Filter</button>
+        </form>
+      </div>
+      <div class="col-2">
+        <form action={% url 'Localisation_App:resourcesPage' %} method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <button class='btn btn-primary filter-button' style="background-color:#219EBC ;border-color:#219EBC"
+            type="submit" value="Fetch">Reset</button>
+        </form>
+      </div>
+      <hr class="category-below-line">
+      <div class="col-4"></div>
+
+      <p class="tools_Fetched_Record_Text">Records Fetched : {{ count }}</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="col-9">
+  <div class="row ">
+    {% for data in page.object_list %}
+    {% if data.ResourceData_PublishedStatus != 'Unpublished' %}
+    <div class="col-sm-12 col-lg-12 ">
+      <div class="tools-main-card-section">
+
+        <div class="row">
+          <div class="col-sm-12 col-lg-4">
+
+            <img src="{% static './Localisation_App/img/resources8.png' %}" class="img-fluid tools-image" alt="..." />
+
+            <div class="Total_downloads">Total Downloads : {{data.ResourceData_DownloadCounter }}</div>
+            <div class="tools-size">
+              File Size : {{ data.ResourceData_fileSize}}
+            </div>
+
+
+            {% if data.ResourceData_UploadSupportDocument != '' %}
+            <a style="text-decoration: none;color:white" href="/media/{{data.ResourceData_UploadSupportDocument}}"
+              download>
+              <div class="tools-section-button">Document </div>
+            </a>
+            {% endif %}{% if data.ResourceData_UploadResourceCode != '' %}
+            <!-- <a style="text-decoration: none;color:white" href="/media/{{data.ResourceData_UploadResourceCode}}"
+              download>
+              <div class="tools-section-button">Download </div>
+            </a> -->
+            <div class="tools-section-button">
+              <button class="btn" onclick="location.href='{% url 'Localisation_App:resourceDownloadCounter' data.id %}' ">
+              <a type="submit" style="text-decoration: none;color:white" href="/media/{{data.ResourceData_UploadResourceCode}}" download>
+                 Download</a>
+                </button>
+            </div>
+
+
+            {% endif %} </div>
+
+
+          <div class="col-sm-12 col-lg-8">
+            <div class="Heading">
+               <h3 style="color: #023047;">{{ data.ResourceData_HeadingName }}</h3>
+                  <div class="category-tool-slug-section">{% for d in data.get_ResourcesData_slug_splited|slice:":10" %}
+                  <button class="category-tool-title-slug" >{{ d }}</button>
+                  {% endfor %}</div>
+          </div>
+          <hr/>
+            <div class="Discription">
+            <p>
+              {{ data.ResourceData_Description|safe }}
+            </p>
+            </div>
+            <div class="Updated_Date1 mt-4">Category : {{ data.ResourceData_CategoryType }}</div>
+            <div class="Updated_Date">Last Updated Date : {{data.ResourceData_LastUpdatedDate|date:"M d, Y"}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    {% endif %}
+    {% empty %}
+				<img src="{% static './Localisation_App/img/nodata.png' %}" class="d-block w-50" /> 
+    {% endfor %}
+
+  </div>
+
+  <div class="section p-3">
+    {% if Pagination_Type == 'All_Data' %}
+    <div class="container">
+      <div class="row pagination1"" >
+        <div class="col-md-12 offset-md-3">
+          <p>Page:{{page.number}}/{{ page.paginator.num_pages}}</p>
+          <nav aria-label="...">
+            <ul class="pagination">
+              <li class="page-item">
+                {% if page.has_previous %}
+                <a class="page-link" href="{% url 'Localisation_App:resources' %}?page={{page.previous_page_number}}"
+                  tabindex="-1">Previous</a>
+                {% endif %}
+              </li>
+              {% for num_page in page.paginator.page_range %}
+              {% if page.number == num_page %}
+              <li class="page-item active">
+                <a class="page-link" href="{% url 'Localisation_App:resources' %}?page={{num_page}}">{{num_page}}<span
+                    class="sr-only">(current)</span></a>
+              </li>
+              {% else %}
+              <li class="page-item">
+                <a class="page-link" href="{% url 'Localisation_App:resources' %}?page={{num_page}}">{{num_page}}<span
+                    class="sr-only">(current)</span></a>
+              </li>
+              {% endif %}
+              {% endfor %}
+
+              <li class="page-item">
+                {% if page.has_next %}
+                <a class="page-link"
+                  href="{% url 'Localisation_App:resources' %}?page={{page.next_page_number}}">Next</a>
+                {% endif %}
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+      </div>
+
+    </div>
+
+    {% elif Pagination_Type == 'Searched_Post' %}
+    <div class="container">
+      <div class="row" style="width:500px">
+        <div class="col-md-12 offset-md-3">
+          <p>Page:{{page.number}}/{{ page.paginator.num_pages}}</p>
+          <nav aria-label="...">
+            <ul class="pagination">
+              <li class="page-item">
+                {% if page.has_previous %}
+                <a class="page-link"
+                  href="{% url 'Localisation_App:resourceSearch' %}?page={{page.previous_page_number}}"
+                  tabindex="-1">Previous</a>
+                {% endif %}
+              </li>
+              {% for num_page in page.paginator.page_range %}
+              {% if page.number == num_page %}
+              <li class="page-item active">
+                <a class="page-link"
+                  href="{% url 'Localisation_App:resourceSearch' %}?page={{num_page}}">{{num_page}}<span
+                    class="sr-only">(current)</span></a>
+              </li>
+              {% else %}
+              <li class="page-item">
+                <a class="page-link"
+                  href="{% url 'Localisation_App:resourceSearch' %}?page={{num_page}}">{{num_page}}<span
+                    class="sr-only">(current)</span></a>
+              </li>
+              {% endif %}
+              {% endfor %}
+
+              <li class="page-item">
+                {% if page.has_next %}
+                <a class="page-link"
+                  href="{% url 'Localisation_App:resourceSearch' %}?page={{page.next_page_number}}">Next</a>
+                {% endif %}
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    {% elif Pagination_Type == 'Category_Post' %}
+    <div class="container">
+      <div class="row" style="width:500px">
+        <div class="col-md-12 offset-md-3">
+          <p>Page:{{page.number}}/{{ page.paginator.num_pages}}</p>
+          <nav aria-label="...">
+            <ul class="pagination">
+              <li class="page-item">
+                {% if page.has_previous %}
+                <a class="page-link" href="{% url 'Localisation_App:resources' %}?page={{page.previous_page_number}}"
+                  tabindex="-1">Previous</a>
+                {% endif %}
+              </li>
+              {% for num_page in page.paginator.page_range %}
+              {% if page.number == num_page %}
+              <li class="page-item active">
+                <a class="page-link" href="{% url 'Localisation_App:resources' %}?page={{num_page}}">{{num_page}}<span
+                    class="sr-only">(current)</span></a>
+              </li>
+              {% else %}
+              <li class="page-item">
+                <a class="page-link" href="{% url 'Localisation_App:resources' %}?page={{num_page}}">{{num_page}}<span
+                    class="sr-only">(current)</span></a>
+              </li>
+              {% endif %}
+              {% endfor %}
+
+              <li class="page-item">
+                {% if page.has_next %}
+                <a class="page-link"
+                  href="{% url 'Localisation_App:resources' %}?page={{page.next_page_number}}">Next</a>
+                {% endif %}
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    No data
+    {% endif %}
+  </div>
+
+
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}
