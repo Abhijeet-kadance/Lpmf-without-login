@@ -36,7 +36,7 @@
               const input = document.getElementById("searchTerm").value
               console.log("input ", input)
               console.log("without ss ", input.replace(/[^a-zA-Z0-9 ]/g, '-'));
-              document.getElementById("searchTerm").value = input.replace(/[^a-zA-Z0-9 ]/g, '-');
+              document.getElementById("searchTerm").value = input.replace(/[^a-zA-Z0-9 ]/g, '');
             }
           </script>
 
